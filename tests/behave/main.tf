@@ -17,7 +17,6 @@ module "s3-bucket-policy-public-access" {
   cloudwatch_event_rule_arn = module.s3-bucket-policy-public-access-cwe.arn
   sns_topic_arn             = module.central-sns-topic.arn
   reflex_kms_key_id         = module.reflex-kms-key.key_id
-  mode                      = "detect"
 }
 
 module "central-sns-topic" {
