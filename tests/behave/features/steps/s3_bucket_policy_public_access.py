@@ -1,5 +1,6 @@
 from behave import *
 import os
+import time
 import logging
 import boto3
 import uuid
@@ -32,6 +33,7 @@ def delete_bucket(bucket_name):
 
 
 def get_message_from_queue(queue_url):
+    time.sleep(45)
     message = SQS_CLIENT.receive_message(QueueUrl=queue_url, WaitTimeSeconds=20)
     message_body = message["Messages"][0]["Body"]
     return message_body
