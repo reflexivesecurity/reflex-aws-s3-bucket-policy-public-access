@@ -5,7 +5,7 @@ import boto3
 import uuid
 from reflex_acceptance_common import ReflexAcceptance
 
-S3_CLIENT = boto3.client("ec2")
+S3_CLIENT = boto3.client("s3")
 SQS_CLIENT = boto3.client("sqs")
 acceptance_client = ReflexAcceptance("s3-bucket-policy-public-access")
 
