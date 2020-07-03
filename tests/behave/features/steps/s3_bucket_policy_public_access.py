@@ -21,7 +21,7 @@ def create_bucket():
 def put_public_bucket_policy(bucket_name):
     put_bucket_response = S3_CLIENT.put_bucket_policy(
         Bucket=bucket_name,
-        Policy='{"Version": "2012-10-17", "Statement": [{ "Sid": "id-1","Effect": "Allow","Principal": "*" , "Action": [ "s3:GetObject"], "Resource": ["arn:aws:s3:::acl3/*" ] } ]}',
+        Policy='{"Version": "2012-10-17", "Statement": [{ "Sid": "id-1","Effect": "Allow","Principal": "*" , "Action": [ "s3:GetObject"], "Resource": ["arn:aws:s3:::%s/*" ] } ]}' % bucket_name,
     )
     logging.info("Modified bucket to be public with: %s", put_bucket_response)
 
