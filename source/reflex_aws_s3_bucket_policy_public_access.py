@@ -24,23 +24,27 @@ class S3BucketPolicyPublicAccess(AWSRule):
         Return True if it is compliant, and False if it is not.
         """
 
-        for statement in self.event["detail"]['requestParameters'][
-                "bucketPolicy"]["Statement"]:
+        for statement in self.event["detail"]["requestParameters"]["bucketPolicy"][
+            "Statement"
+        ]:
             if statement["Principal"] == "*":
                 return False
         return True
 
     def get_remediation_message(self):
         """ Returns a message about the remediation action that occurred """
-        return f"The S3 bucket {self.bucket_name} contains a Bucket Policy " \
-               f"that grants Public Access. "
+        return (
+            f"The S3 bucket {self.bucket_name} contains a Bucket Policy "
+            f"that grants Public Access. "
+        )
 
 
 def lambda_handler(event, _):
     """ Handles the incoming event """
     print(event)
-    if subscription_confirmation.is_subscription_confirmation(event):
-        subscription_confirmation.confirm_subscription(event)
+    event_payload = json.loads(event["Records"][0]["body"])
+    if subscription_confirmation.is_subscription_confirmation(event_payload):
+        subscription_confirmation.confirm_subscription(event_payload)
         return
-    rule = S3BucketPolicyPublicAccess(json.loads(event["Records"][0]["body"]))
+    rule = S3BucketPolicyPublicAccess(event_payload)
     rule.run_compliance_rule()
